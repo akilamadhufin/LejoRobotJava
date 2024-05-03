@@ -98,7 +98,7 @@ public class ObstacleDetector implements Runnable {
     private EV3UltrasonicSensor ultrasonicSensor;
     private SampleProvider distanceProvider;
     private int obstacleCount = 0; // Counter to keep track of obstacles
-    private int obstacleDistance = 0; // Initial value
+    private float obstacleDistance = 0; // Initial value
 
     public ObstacleDetector(DataExchange DE, SoundWave soundwave) {
         DEObj = DE;
@@ -113,7 +113,7 @@ public class ObstacleDetector implements Runnable {
         while (true) {
             try {
                 // Query the web service for obstacle detection data
-                URL url = new URL("http://192.168.75.248:8080/rest/legoservice/getfollow");
+                URL url = new URL("http://192.168.75.248:8080/rest/legoservice/getobstacle");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET"); // Specify the request method explicitly
                 conn.setConnectTimeout(5000); // Set a timeout for connection (5 seconds)
@@ -129,9 +129,8 @@ public class ObstacleDetector implements Runnable {
                         String[] data = line.split("#");
                         if (data.length >= 2) {
                             // Adjust the security distance based on received data
-                            obstacleDistance = Integer.parseInt(data[2]);
-                            
-                            LCD.drawString("Distance: " + obstacleDistance, 0, 6);
+                        obstacleDistance =Float.parseFloat(data[2]);
+                        	                                                    
                         }
                     }
                     // Close resources
@@ -155,8 +154,11 @@ public class ObstacleDetector implements Runnable {
 
             // Continue with obstacle detection logic
             distanceProvider.fetchSample(sample, 0);
-            int distance = (int) sample[0];
-            if (distance > obstacleDistance) {
+            float distance =  sample[0];
+            
+            LCD.drawString("Distance: " + distance, 0, 6);
+            LCD.drawString("avoid_Dis: " + obstacleDistance, 0, 7);
+            if (distance < obstacleDistance) {
                 // No obstacle, continue following the line
                 DEObj.setCMD(1); // Continue following the line
             } else {
@@ -166,8 +168,8 @@ public class ObstacleDetector implements Runnable {
                     DEObj.setCMD(2); // Turn left and move outside the line
                     // LCD Output
                     // Play music
-                    Thread musicThread = new Thread(soundwave);
-                    musicThread.start();
+                 //   Thread musicThread = new Thread(soundwave);
+                 //   musicThread.start();
                    // LCD.drawString("First obstacle found!", 0, 1);
                     LCD.refresh();
 
@@ -177,10 +179,10 @@ public class ObstacleDetector implements Runnable {
                     // More than one obstacle encountered, stop
                     DEObj.setCMD(0); // Stop the robot
                     // LCD Output
-                    LCD.clear(); // Clear the screen before displaying new message
+                   // LCD.clear(); // Clear the screen before displaying new message
                     Sound.beep();
                   //  LCD.drawString("Second obstacle found!", 0, 1);
-                    LCD.refresh();
+                   // LCD.refresh();
                 }
             }
             Delay.msDelay(100); // Delay to avoid rapid command changes

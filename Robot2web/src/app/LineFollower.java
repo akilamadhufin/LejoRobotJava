@@ -271,9 +271,9 @@ public class LineFollower implements Runnable {
                 // Query the web service for line follower data
                 URL url = new URL("http://192.168.75.248:8080/rest/legoservice/getfollow");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET"); // Specify the request method explicitly
-                conn.setConnectTimeout(5000); // Set a timeout for connection (5 seconds)
-                conn.setReadTimeout(5000); // Set a timeout for reading data (5 seconds)
+//                conn.setRequestMethod("GET"); // Specify the request method explicitly
+//                conn.setConnectTimeout(5000); // Set a timeout for connection (5 seconds)
+//                conn.setReadTimeout(5000); // Set a timeout for reading data (5 seconds)
 
                 int responseCode = conn.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {

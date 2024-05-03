@@ -18,6 +18,8 @@ public class Obstacale {
 	private static int StepFourTimeDelay;
 	private static int ObtacalCount;
 	private static int obstacleDistance;
+	
+	
 	public static int getId() {
 		return Id;
 	}
