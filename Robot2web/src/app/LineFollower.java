@@ -259,6 +259,11 @@ public class LineFollower implements Runnable {
         this.DEObj = deObj; // Initialize DataExchange object
         this.colorSensor = new ColorSensor(DEObj); // Initialize ColorSensor object
     }
+    
+    //Yashodha
+    public ColorSensor getColorSensor() {
+		return colorSensor;
+	}
 
     @Override
     public void run() {
@@ -269,22 +274,25 @@ public class LineFollower implements Runnable {
         while (isRunning) {
             try {
                 // Query the web service for line follower data
-                URL url = new URL("http://192.168.75.248:8080/rest/legoservice/getfollow");
+                URL url = new URL("http://192.168.1.124:8080/rest/legoservice/getfollow");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET"); // Specify the request method explicitly
                 conn.setConnectTimeout(5000); // Set a timeout for connection (5 seconds)
                 conn.setReadTimeout(5000); // Set a timeout for reading data (5 seconds)
 
                 int responseCode = conn.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpURLConnection.HTTP_OK) 
+                {
                     InputStream is = conn.getInputStream();
                     InputStreamReader isr = new InputStreamReader(is);
                     BufferedReader br = new BufferedReader(isr);
                     String line;
-                    while ((line = br.readLine()) != null) {
+                    while ((line = br.readLine()) != null) 
+                    {
                         // Process the line follower data
                         String[] data = line.split("#");
-                        if (data.length >= 6) {
+                        if (data.length >= 6) 
+                        {
                             int leftMotorSpeed_1 = Integer.parseInt(data[2]);
                             int rightMotorSpeed_1 = Integer.parseInt(data[3]);
                             int leftMotorSpeed_2 = Integer.parseInt(data[4]);
@@ -305,12 +313,16 @@ public class LineFollower implements Runnable {
                             // Display current intensity on LCD
                             LCD.drawString("CurrentInte: " + intensityGap, 0, 5);
 
-                            if (DEObj.getCMD() == 1) {
-                                if (Math.abs(intensityGap) >= 13) {
+                            if (DEObj.getCMD() == 1) 
+                            {
+                                if (Math.abs(intensityGap) >= 13) 
+                                {
                                     // Turn right
                                     Motor.C.setSpeed(rightMotorSpeed_1);
                                     Motor.B.setSpeed(leftMotorSpeed_1);
-                                } else {
+                                } 
+                                else 
+                                {
                                     // Turn left
                                     Motor.C.setSpeed(rightMotorSpeed_2);
                                     Motor.B.setSpeed(leftMotorSpeed_2);
@@ -318,7 +330,9 @@ public class LineFollower implements Runnable {
                                 // Start the motors
                                 Motor.B.forward();
                                 Motor.C.forward();
-                            } else if (DEObj.getCMD() == 2) {
+                            } 
+                            else if (DEObj.getCMD() == 2) 
+                            {
                             	// Turn left
                                 Motor.C.setSpeed(200); 
                                 Motor.B.setSpeed(200);
@@ -429,7 +443,9 @@ public class LineFollower implements Runnable {
                                 Motor.C.forward();
                                 
                             } 
-                        } else {
+                        } 
+                        else 
+                        {
                             System.out.println("Invalid data format received: " + line);
                         }
                     }
@@ -437,18 +453,26 @@ public class LineFollower implements Runnable {
                     br.close();
                     isr.close();
                     is.close();
-                } else {
+                } 
+                else 
+                {
                     System.out.println("Failed to retrieve data. Response code: " + responseCode);
                 }
                 conn.disconnect();
                 Thread.sleep(100); // Adjust delay as needed
-            } catch (Exception e) {
+            } 
+            
+            catch (Exception e) 
+            {
                 e.printStackTrace();
                 System.out.println("Some problem occurred while fetching or processing data!");
                 // Add a delay to avoid continuous retries in case of errors
-                try {
+                try 
+                {
                     Thread.sleep(5000); // Wait for 5 seconds before retrying
-                } catch (InterruptedException ex) {
+                } 
+                catch (InterruptedException ex) 
+                {
                     ex.printStackTrace();
                 }
             }
