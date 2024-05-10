@@ -84,6 +84,11 @@ public class ColorSensor implements Runnable {
         this.colorSensor = new EV3ColorSensor(LocalEV3.get().getPort("S3"));
         this.intensityProvider = colorSensor.getRedMode();
     }
+    
+    ///Yashodha
+    public EV3ColorSensor getColorSensor() {
+		return colorSensor;
+	}
 
     @Override
     public void run() {     

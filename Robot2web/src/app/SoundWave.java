@@ -25,6 +25,8 @@ public class SoundWave implements Runnable {
     public void run() {
         int[] notes = {4, 25, 500, 600, 700, 800, 900,1000,50,40,20,4,4, 25, 500, 600, 700, 800, 900,1000,50,40,20,4};
         int[] timing = {50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50};
+      //  int[] notes = {4, 25};
+      //  int[] timing = {50,50};
 
         int totalTiming = 0;
 
