@@ -21,6 +21,11 @@ public class LineFollower implements Runnable {
         this.DEObj = deObj; // Initialize DataExchange object
         this.colorSensor = new ColorSensor(DEObj); // Initialize ColorSensor object
     }
+    
+    //Yashodha
+    public ColorSensor getColorSensor() {
+		return colorSensor;
+	}
 
     @Override
     public void run() 
@@ -34,7 +39,7 @@ public class LineFollower implements Runnable {
             try 
             {
                 // Query the web service for line follower data
-                URL url = new URL("http://192.168.75.248:8080/rest/legoservice/getfollow");
+                URL url = new URL("http://192.168.1.124:8080/rest/legoservice/getfollow");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET"); // Specify the request method explicitly
                 conn.setConnectTimeout(5000); // Set a timeout for connection (5 seconds)
@@ -92,7 +97,7 @@ public class LineFollower implements Runnable {
                                 Motor.B.forward();
                                 Motor.C.forward();
                             } 
-                            
+
                             else if (DEObj.getCMD() == 2) 
                             {
                             	// Turn left
@@ -223,8 +228,13 @@ public class LineFollower implements Runnable {
                 }
                 
                 conn.disconnect();
+
                 Thread.sleep(100); 
             } 
+
+                Thread.sleep(100);
+            } 
+            
             catch (Exception e) 
             {
                 e.printStackTrace();

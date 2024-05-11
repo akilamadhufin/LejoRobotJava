@@ -1,9 +1,6 @@
 package data;
 
 
-
-
-
 public class Obstacale {
 	
 	private static int Id;
@@ -20,7 +17,7 @@ public class Obstacale {
 	private static int StepFourRightMotorSpeed;
 	private static int StepFourTimeDelay;
 	private static int ObtacalCount;
-	private static int ObtacaDistance;
+	private static int obstacleDistance;
 	public static int getId() {
 		return Id;
 	}
@@ -63,8 +60,8 @@ public class Obstacale {
 	public static int getObtacalCount() {
 		return ObtacalCount;
 	}
-	public static int getObtacaDistance() {
-		return ObtacaDistance;
+	public static int getObstacleDistance() {
+		return obstacleDistance;
 	}
 	public static void setId(int id) {
 		Id = id;
@@ -167,7 +164,7 @@ public class Obstacale {
 			e.printStackTrace();
 		}
 	}
-	public static void setObtacalCount(String obtacalCount) {
+	public static void setObstacleCount(String obtacalCount) {
 		try {
 			ObtacalCount = Integer.parseInt(obtacalCount);
 		} catch (NumberFormatException e) {
@@ -175,9 +172,9 @@ public class Obstacale {
 			e.printStackTrace();
 		}
 	}
-	public static void setObtacaDistance(String obtacaDistance) {
+	public static void setobstacleDistance(String obtacaDistance) {
 		try {
-			ObtacaDistance = Integer.parseInt(obtacaDistance);
+			obstacleDistance = Integer.parseInt(obtacaDistance);
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
